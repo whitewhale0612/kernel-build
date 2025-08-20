@@ -1,4 +1,4 @@
-# kernel-build
+# kernel-buildr
 用GitHub Actions来进行云编译内核
 # main.yaml为脚本
 # repository：111/kernel_sm1111
