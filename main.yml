@@ -1,4 +1,4 @@
-name: OnePlus SM8750 Kernel Builder (zyclang-19)
+name: Kernel Builder
 
 on:
   workflow_dispatch:
@@ -18,11 +18,11 @@ jobs:
         ref: v7
         path: kernel_source
 
-    # 下载并设置 zyclang-19-20240723
+    # 下载并设置 clang-19-20240723
     - name: Setup zyclang Toolchain
       run: |
          
-          echo "正在克隆llvm-Clang20工具链..." &&
+          echo "正在克隆Clang20工具链..." &&
           mkdir -p clang &&
           aria2c -s16 -x16 -k1M https://github.com/ZyCromerZ/Clang/releases/download/19.0.0git-20240723-release/Clang-19.0.0git-20240723.tar.gz -o clang.tar.gz &&
           tar -xzf clang.tar.gz -C clang
@@ -30,8 +30,8 @@ jobs:
          # echo "正在克隆构建工具..." &&
          # aria2c -s16 -x16 -k1M https://github.com/cctv18/oneplus_sm8650_toolchain/releases/download/LLVM-Clang20-r547379/build-tools.zip -o build-tools.zip &&
          # unzip -q build-tools.zip &&
-         #echo "所有源码及llvm-Clang20工具链初始化完成！"
-           
+           echo "所有源码及工具链初始化完成！"
+         #如果需要别的工具可以自行补充！！ 
           
     - name: Install Build Dependencies
       run: |
