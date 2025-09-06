@@ -3,7 +3,7 @@
 on:
   workflow_dispatch:
   push:
-    branches: [v7]
+    branches: [v8]
 
 jobs:
   kernel-build:
