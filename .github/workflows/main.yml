@@ -1,5 +1,4 @@
 name: Kernel Builder
-
 on:
   workflow_dispatch:
   push:
