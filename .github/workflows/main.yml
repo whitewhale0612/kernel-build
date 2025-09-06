@@ -71,7 +71,7 @@ name: Kernel Builder
           export CCACHE_NOHASHDIR="true"
           export CCACHE_HARDLINK="true"
           export CCACHE_DIR="${{ env.CCACHE_DIR }}"
-          export CCACHE_MAXSIZE="20G"
+          
         cd kernel_source
         make ARCH=arm64 SUBARCH=arm64 O=out \
           LLVM=1 \
