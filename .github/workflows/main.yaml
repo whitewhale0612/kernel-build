@@ -6,7 +6,7 @@ name: Kernel Builder
  on:
   workflow_dispatch:
   push:
-    branches: [v7]
+    branches: [main]
 
  jobs:
   kernel-build:
