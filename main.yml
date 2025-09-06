@@ -3,7 +3,7 @@ name: Kernel Builder
 on:
   workflow_dispatch:
   push:
-    branches: [v7]
+    branches: [v9]
 
 jobs:
   kernel-build:
@@ -14,15 +14,15 @@ jobs:
     - name: Checkout Kernel Source
       uses: actions/checkout@v4
       with:
-        repository: brokestar233/android_kernel_common_oneplus_sm8750
-        ref: v7
+        repository: whitewhale0612/android_kernel_common_oneplus_sm8750
+        ref: v9
         path: kernel_source
 
     # 下载并设置 clang-19-20240723
     - name: Setup zyclang Toolchain
       run: |
          
-          echo "正在克隆Clang20工具链..." &&
+          echo "正在克隆zyClang19工具链..." &&
           mkdir -p clang &&
           aria2c -s16 -x16 -k1M https://github.com/ZyCromerZ/Clang/releases/download/19.0.0git-20240723-release/Clang-19.0.0git-20240723.tar.gz -o clang.tar.gz &&
           tar -xzf clang.tar.gz -C clang
@@ -42,7 +42,12 @@ jobs:
           libelf-dev llvm lld  # Clang 编译所需额外依赖
         sudo apt install ccache
         sudo apt install pahole
-
+        
+    - name: sukisu support
+    
+       cd kernel_source
+        curl -LSs "https://raw.githubusercontent.com/ShirkNeko/SukiSU-Ultra/main/kernel/setup.sh" | bash -s susfs-dev
+       cd ~
     # 使用 zyclang 的配置和编译步骤
     - name: Configure Kernel
       run: |
@@ -63,7 +68,7 @@ jobs:
           export CCACHE_NOHASHDIR="true"
           export CCACHE_HARDLINK="true"
           export CCACHE_DIR="${{ env.CCACHE_DIR }}"
-          export CCACHE_MAXSIZE="3G"
+          export CCACHE_MAXSIZE="20G"
         cd kernel_source
         make ARCH=arm64 SUBARCH=arm64 O=out \
           LLVM=1 \
@@ -88,6 +93,7 @@ jobs:
           CROSS_COMPILE=aarch64-linux-gnu- \
           CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
           CLANG_AUTOFDO_PROFILE="../android/gki/aarch64/afdo/kernel.afdo"
+          echo ">>> 内核编译成功！"
 
           
     - name: Package Artifacts
